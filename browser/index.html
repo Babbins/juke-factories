@@ -12,23 +12,32 @@
     <script src="/js/album/album.factories.js" defer></script>
     <script src="/js/player/player.controller.js" defer></script>
     <script src="/js/player/player.factory.js" defer></script>
+    <script src="/js/sidebar/sidebar.controller.js" defer></script>
+    <script src="/js/artist/artist.factory.js" defer></script>
+    <script src="/js/artist/artists.controller.js" defer></script>
+    <script src="/js/artist/artist.controller.js" defer></script>
   </head>
   <body ng-app="juke">
     <div id="main" class="container-fluid">
 
       <div class="col-xs-2">
-        <sidebar>
+        <sidebar ng-controller="SidebarCtrl">
           <img src="juke.svg" class="logo">
           <section>
             <h4 class="menu-item active">
-              <a href="#">ALBUMS</a>
+              <a href="#" ng-click="viewAlbums()">ALBUMS</a>
             </h4>
+          </section>
+          <section>
+            <h5 class="playlist-item">
+              <a href="#" ng-click="viewArtists()">ARTISTS</a>
+            </h5>
           </section>
         </sidebar>
       </div>
 
       <div class="col-xs-10">
-        <div class="album" ng-show="true" ng-controller="AlbumCtrl">
+        <div class="album" ng-show="showAlbum" ng-controller="AlbumCtrl">
           <p>
             <h3>{{ album.name }} Duration: {{ album.minutes }}:{{album.seconds}}</h3>
             <img ng-src="{{ album.imageUrl }}" class="img-thumbnail">
@@ -56,11 +65,11 @@
             </tbody>
           </table>
         </div>
-        <div ng-show="false" ng-controller="AlbumsCtrl">
+        <div ng-show="albumsPressed" ng-controller="AlbumsCtrl">
           <h3>Albums</h3>
           <div class="row">
             <div class="col-xs-4" ng-repeat="album in albums">
-              <a class="thumbnail" href="#">
+              <a class="thumbnail" href="#" ng-click="viewAlbum(album.id)">
                 <img ng-src="{{album.imageUrl}}">
                 <div class="caption">
                   <h5>
@@ -72,8 +81,20 @@
             </div>
           </div>
         </div>
+        <div ng-show="artistsPressed" ng-controller="ArtistsCtrl">
+          <h3>Artists</h3>
+            <div class="list-group">
+              <div class="list-group-item" ng-repeat="artist in artists">
+              <a href="#" ng-click="viewOneArtist(artist.id)">{{ artist.name }}</a>
+            </div>
+          </div>
+        </div>
+        <div ng-show="artistPressed" ng-controller="ArtistCtrl">
+          <h3>{{artist.name}}</h3>
+          <h4>ALBUMS</h4>
+          <h4>SONGS</h4>
+        </div>
       </div>
-
       <footer>
         <div ng-show="getCurrentSong()" ng-controller="PlayerCtrl">
           <div class="pull-left">
