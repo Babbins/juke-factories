@@ -1,11 +1,14 @@
 
-juke.factory('AlbumFactory', function($http){
+juke.factory('AlbumFactory', function($http, $rootScope){
   return {
     fetchAll: function(){
       return $http.get('/api/albums');
     },
     fetchById: function(id){
       return $http.get('/api/albums/' + id);
+    },
+    viewAlbum: function(albumId){
+      $rootScope.$broadcast('viewSwap', { type: 'Album', id: albumId });
     }
   }
 });

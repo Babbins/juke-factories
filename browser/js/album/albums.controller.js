@@ -12,9 +12,7 @@ juke.controller('AlbumsCtrl', function ($scope, $rootScope, $log, StatsFactory, 
     }
 
   });
-  $scope.viewAlbum = function(albumId){
-    $rootScope.$broadcast('viewSwap', { type: 'Album', id: albumId });
-  }
+  $scope.viewAlbum = AlbumFactory.viewAlbum;
   // load our initial data
   AlbumFactory.fetchAll()
   .then(function (res) { return res.data; })

@@ -76,6 +76,15 @@ juke.factory('PlayerFactory', function($http, $rootScope){
         return 0;
       }
       return audio.currentTime/audio.duration
+    },
+    toggle: function (song) {
+      if (PlayerFactory.isPlaying()) PlayerFactory.pause();
+      else if(currentSong === song){
+        PlayerFactory.resume();
+      }
+      else{
+        PlayerFactory.start(song, _songList);
+      }
     }
   }
   return PlayerFactory
